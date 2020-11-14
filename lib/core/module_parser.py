@@ -3,7 +3,7 @@ import yaml
 import lib.modules
 
 # TODO change hard coded directory
-config_dir = "/Users/tylerbutler/Documents/projects/programming/Github/sendbirdy/lib/modules/modules.yml"
+config_dir = "/Users/tylerbutler/PycharmProjects/SendBird-API-Enumeration/lib/modules/modules.yml"
 module_file = open(config_dir)
 parsed_yaml = yaml.load(module_file, Loader=yaml.FullLoader)
 

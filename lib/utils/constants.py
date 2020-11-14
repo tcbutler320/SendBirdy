@@ -46,7 +46,7 @@ usage = (
     "                |[put-data]-- -cp --check-put: check if you have permission to put data to sendbird api\n")
 
 errorMsg = "{!}-----[ERROR] You did not supply the correct arguments\n";
-askForHelp = "{!}-----[ERROR] use -h for help with usage\n";
+askForHelp = "{!}-----[ERROR] use --help for help with usage\n";
 indent_msg = "{!}-----"
 indent_err = "[ERROR]---"
 indent_info = "[INFO]---"

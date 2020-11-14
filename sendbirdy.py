@@ -11,15 +11,21 @@ import sys
 import time
 import getopt
 from pyjavaproperties import Properties
+import logging as log
+
 
 import lib.utils.constants as c
 import lib.utils.jsonformatter as formatter
 import lib.core.request_sender as requester
 import lib.core.module_parser as parser
 
+log.basicConfig(filename='sendbirdy.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
+
+
 
 def print_help():
     print(c.usage)
+    sys.exit(0)
 
 def print_options_header():
     print('{x}------- Global Options ----------')
@@ -56,7 +62,7 @@ def start_sendbirdy():
     try:
         requester.requestSender(c.app)
     except RuntimeError as e:
-        print(c.indent_msg + c.indent_err + e)
+        print(c.indent_msg + c.indent_err + " send to log")
     return
 
 
@@ -68,34 +74,35 @@ def main():
     ts = time.gmtime()
     ts2 = time.asctime(ts)
 
-    if (len(sys.argv)) == 1:  # if no arguments are provided, print usage and exit
+    if (len(sys.argv)) <= 1:  # if no arguments are provided, print usage and exit
         print(c.errorMsg + c.askForHelp)
         print("{!}-----[Settings]--- Workspace: " + p['WORKSPACE'])
         print("{!}-----[Settings]--- hinge-id: " + p['HINGE-ID'])
         print("{!}-----[Settings]--- hinge-token: " + p['HINGE-TOKEN'])
         sys.exit(0)
+    else:
 
-    # Get Options
+        # Get Options
 
-    options, remainder = getopt.getopt(sys.argv[1:], 'o:v', ['help',
-                                                             'app=',
-                                                             'put=',
-                                                             'interactive=',
-                                                             'version',
-                                                             ])
-    for opt, arg in options:
-        if opt in ('-h', '--help'):
-            print_help()
-        elif opt in ('-a', '--app'):
-            c.app = arg
-        elif opt in ('-i', '--interactive'):
-            if arg == "yes":
-                interactive_mode = True
-        elif opt == ('-i', '--interactive'):
-            if arg != "yes":
-                print("interactive")
-        start_sendbirdy()
-        sys.exit(0)
+        options, remainder = getopt.getopt(sys.argv[1:], 'o:v', ['help',
+                                                                 'app=',
+                                                                 'put=',
+                                                                 'interactive=',
+                                                                 'version',
+                                                                 ])
+        for opt, arg in options:
+            if opt in ('-h', '--help'):
+                print_help()
+            elif opt in ('-a', '--app'):
+                c.app = arg
+            elif opt in ('-i', '--interactive'):
+                if arg == "yes":
+                    interactive_mode = True
+            elif opt == ('-i', '--interactive'):
+                if arg != "yes":
+                    print("interactive")
+            start_sendbirdy()
+            sys.exit(0)
 
 
 main()
